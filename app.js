@@ -2,9 +2,9 @@ const IMG_FOLDER = "images";
 const IMG_EXT    = "jpeg";
  
 const STORE_NAME = {
-  ar: "متجر المكملات",
-  en: "Supplements Store",
-  tr: "Takviye Mağazası"
+  ar: "للتواصل معي",
+  en: "For Contact Me",
+  tr: "benimle iletişim için"
 };
  
 const RATES = {
@@ -28,11 +28,12 @@ const CATEGORIES = [
 
 let currentCat = "all";
 
+// مصفوفة المنتجات (يمكنك إضافة أو تغيير الوصف المخصص داخل كائن info الخاص بكل منتج)
 const PRODUCTS = [
   // ---- التغذية الأساسية (1 - 8) ----
-  [1899.99,"فورمولا 1 - كراميل مملح","Formula 1 - Salted Caramel","Formül 1 - Tuzlu Karamel Aromalı"],
-  [1899.99,"فورمولا 1 - فانيلا","Formula 1 - Vanilla","Formül 1 - Vanilya Aromalı"],
-  [1899.99,"فورمولا 1 - شوكولاتة","Formula 1 - Chocolate","Formül 1 - Çikolata Aromalı"],
+  [1899.99,"فورمولا 1 - كراميل مملح","Formula 1 - Salted Caramel","Formül 1 - Tuzlu Karamel Aromalı", { ar: "وجبة متكاملة ومغذية تحتوي على نسبة عالية من البروتين والألياف والفيتامينات الأساسية.", en: "Nutritious meal replacement high in protein, fiber, and essential vitamins.", tr: "Proteyin, lif ve temel vitaminler bakımından zengin besleyici öğün." }],
+  [1899.99,"فورمولا 1 - فانيلا","Formula 1 - Vanilla","Formül 1 - Vanilya Aromalı", { ar: "بديل وجبة صحي ولذيذ بنكهة الفانيلا الغنية لمساعدتك على إدار الوزن بشكل متوازن.", en: "Delicious vanilla meal replacement to help control weight in a balanced way.", tr: "Kilo kontrolüne yardımcı lezzetli vanilya aromalı öğün yerine geçen içecek." }],
+  [1899.99,"فورمولا 1 - شوكولاتة","Formula 1 - Chocolate","Formül 1 - Çikolata Aromalı", { ar: "مشروب مغذي بنكهة الشوكولاتة الغنية بالبروتينات والفيتامينات متعددة الاستخدامات.", en: "Nutritious chocolate shake packed with essential proteins and nutrients.", tr: "Çikolata aromalı, zengin protein ve vitamin içeren besleyici öğün." }],
   [1899.99,"فورمولا 1 - موز","Formula 1 - Banana","Formül 1 Muz Aromalı"],
   [1899.99,"فورمولا 1 - توت أحمر وشوكولاتة بيضاء","Formula 1 - Raspberry & White Chocolate","Formül 1 - Ahududu ve Beyaz Çikolata Aromalı"],
   [2065.00,"فورمولا 1 - شوربة الفطر (بديل وجبة)","Formula 1 Savoury Mushroom","Formül 1 Öğün Yerine Geçen Mantar Aromalı Çorba"],
@@ -42,7 +43,7 @@ const PRODUCTS = [
   // ---- مشروبات (9 - 21) ----
   [1499.99,"مشروب الأعشاب الفوري - كلاسيك 51 غم","Instant Herbal Beverage Original - 51 g","Çay ve Bitki Ekstreli Aromalı İçecek Tozu Klasik - 51 g"],
   [2699.99,"مشروب الأعشاب الفوري - كلاسيك 102 غم","Instant Herbal Beverage Original - 102 g","Çay ve Bitki Ekstreli Aromalı İçecek Tozu Klasik - 102 g"],
-  [1499.99,"مشروب الأعشاب الفوري - ليمون 51 غم","Instant Herbal Beverage Lemon - 51 g","Çay ve Bitki Ekstreli Aromalı İçecek Tozu - Limon 51 g"],
+  [1499.99,"مشروب الأعشاب الفوري - ليمون 51 غم","Instant Herbal Beverage Lemon - 51 g","Çay و Bitki Ekstreli Aromalı İçecek Tozu - Limon 51 g"],
   [1499.99,"مشروب الأعشاب الفوري - توت أحمر 51 غم","Instant Herbal Beverage Raspberry - 51 g","Çay ve Bitki Ekstreli Aromalı İçecek Tozu Ahududu - 51 g"],
   [1499.99,"مشروب الأعشاب الفوري - خوخ 51 غم","Instant Herbal Beverage Peach - 51 g","Çay ve Bitki Ekstreli Aromalı İçecek Tozu Şeftali - 51 g"],
   [1799.99,"الالوفيرا ماء الصبار 473 مل","Herbal Aloe Concentrate Drink 473ml","Herbal Aloe Konsantre İçecek 473 ml"],
@@ -104,7 +105,7 @@ const PRODUCTS = [
   [359.99,"خلاط سوبر 400 مل","Super shaker 400 ml","super shaker 400 ml"],
   [69.99,"ملعقة قياس وضع الليل / مشروب كولاجين","Night mod collagin drink scoop","night mod collagin drink kaşığı"],
   [559.99,"خلاط نينو أسود 500 مل","Neon shaker 500 ml black","neon shaker 500 ml siyah"],
-  [556.99,"خلاط نيون بنفسجي 500 مل","Neon shaker 500 ml purple","Neon shaker 500 ml mor"],
+  [556.99,"خلاط نيون بنفسجي 500 مل","Neon shaker 500 ml mor"],
   [999.99,"حقيبة ظهر هيربالايف","Herbalife Bagpack","Herbalife çantası"],
   [559.99,"خلاط نيون ازرق 500 مل","Neon shaker 500 ml blue","Noen shaker 500 ml mavi"],
   [359.99,"زجاجة مياه 650 مل","Tritan water bottle 650 ml","tritan suluk 650 ml"],
@@ -114,12 +115,15 @@ const PRODUCTS = [
 const T = {
   ar:{ dir:"rtl", name:"العربية",  search:"ابحث عن منتج...", settings:"الإعدادات",
        theme:"السمة", lang:"اللغة", cur:"العملة", none:"ما لقينا منتج بهذا الاسم",
+       infoBtn:"معلومات", defaultInfo: "منتج عالي الجودة مصمم لتلبية احتياجاتك اليومية بدقة وكفاءة عالية.",
        themes:{default:"افتراضي", gold:"ذهبي", dark:"داكن"} },
   en:{ dir:"ltr", name:"English",  search:"Search for a product...", settings:"Settings",
        theme:"Theme", lang:"Language", cur:"Currency", none:"No products found",
+       infoBtn:"Details", defaultInfo: "A high-quality product designed to meet your daily needs efficiently.",
        themes:{default:"Default", gold:"Gold", dark:"Dark"} },
   tr:{ dir:"ltr", name:"Türkçe",   search:"Ürün ara...", settings:"Ayarlar",
        theme:"Tema", lang:"Dil", cur:"Para birimi", none:"Ürün bulunamadı",
+       infoBtn:"Bilgi", defaultInfo: "Günlük ihtiyaçlarınızı en iyi şekilde karşılamak için tasarlanmış yüksek kaliteli ürün.",
        themes:{default:"Varsayılan", gold:"Altın", dark:"Koyu"} }
 };
 const LANG_ORDER  = ["ar","en","tr"];
@@ -163,10 +167,11 @@ function renderCategories(){
 function renderProducts(){
   const q = $("search").value.trim().toLowerCase();
   const html = [];
+  const langIdx = LANG_ORDER.indexOf(state.lang);
   
   PRODUCTS.forEach((p, i) => {
     const id = i + 1; // رقم المنتج والصورة
-    const name = p[1 + LANG_ORDER.indexOf(state.lang)];
+    const name = p[1 + langIdx] || p[1];
     
     // تصفية حسب القسم المحدد
     if(currentCat !== "all") {
@@ -175,7 +180,7 @@ function renderProducts(){
     }
     
     // تصفية حسب البحث
-    if(q && ![p[1],p[2],p[3]].some(n => n.toLowerCase().includes(q))) return;
+    if(q && ![p[1],p[2],p[3]].some(n => n && n.toLowerCase().includes(q))) return;
     
     html.push(`
       <article class="card">
@@ -184,14 +189,53 @@ function renderProducts(){
         </div>
         <div class="card-body">
           <h3 class="card-name" dir="auto">${esc(name)}</h3>
-          <div class="card-price">${esc(formatPrice(p[0]))}</div>
+          <div class="card-footer">
+            <div class="card-price">${esc(formatPrice(p[0]))}</div>
+            <button class="info-btn" data-info-idx="${i}" title="${esc(T[state.lang].infoBtn)}">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>${esc(T[state.lang].infoBtn)}</span>
+            </button>
+          </div>
         </div>
       </article>`);
   });
   
   $("grid").innerHTML = html.length ? html.join("") : `<div class="empty">${esc(T[state.lang].none)}</div>`;
 }
- 
+
+// عرض نافذة تفاصيل المنتج المخصصة
+function showProductInfo(index) {
+  const p = PRODUCTS[index];
+  if(!p) return;
+  
+  const id = index + 1;
+  const langIdx = LANG_ORDER.indexOf(state.lang);
+  const name = p[1 + langIdx] || p[1];
+  
+  // استخراج تفاصيل أو وصف المنتج
+  let infoText = T[state.lang].defaultInfo;
+  if (p[4] && typeof p[4] === 'object') {
+    infoText = p[4][state.lang] || p[4]['ar'] || infoText;
+  }
+  
+  $("infoModalImg").src = `${IMG_FOLDER}/${id}.${IMG_EXT}`;
+  $("infoModalTitle").textContent = name;
+  $("infoModalPrice").textContent = formatPrice(p[0]);
+  $("infoModalDesc").textContent = infoText;
+  
+  $("infoOverlay").classList.add("on");
+  document.body.classList.add("lock");
+}
+
+const closeInfoModal = () => {
+  $("infoOverlay").classList.remove("on");
+  document.body.classList.remove("lock");
+};
+
 document.addEventListener("error", e => {
   const img = e.target;
   if(img.tagName !== "IMG" || !img.dataset.id) return;
@@ -243,13 +287,30 @@ $("catBar").addEventListener("click", e => {
   renderProducts();
 });
 
+// فتح نافذة المعلومات عند الضغط على زر المعلومات
+$("grid").addEventListener("click", e => {
+  const btn = e.target.closest("[data-info-idx]");
+  if(!btn) return;
+  showProductInfo(parseInt(btn.dataset.infoIdx, 10));
+});
+
 $("search").addEventListener("input", renderProducts);
 const openSheet  = () => { $("overlay").classList.add("on");    document.body.classList.add("lock"); };
 const closeSheet = () => { $("overlay").classList.remove("on"); document.body.classList.remove("lock"); };
 $("openSettings").addEventListener("click", openSheet);
 $("closeSettings").addEventListener("click", closeSheet);
+$("closeInfoModal").addEventListener("click", closeInfoModal);
+
 $("overlay").addEventListener("click", e => { if(e.target === $("overlay")) closeSheet(); });
-document.addEventListener("keydown", e => { if(e.key === "Escape") closeSheet(); });
+$("infoOverlay").addEventListener("click", e => { if(e.target === $("infoOverlay")) closeInfoModal(); });
+
+document.addEventListener("keydown", e => { 
+  if(e.key === "Escape") {
+    closeSheet();
+    closeInfoModal();
+  }
+});
+
 $("overlay").addEventListener("click", e => {
   const b = e.target.closest("[data-theme-opt],[data-lang-opt],[data-cur-opt]");
   if(!b) return;

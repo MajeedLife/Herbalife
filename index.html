@@ -19,7 +19,7 @@
     <div class="brand" id="brand"></div>
     
     <!-- مجموعة روابط التواصل الاجتماعي -->
-    <div class="social-buttons" style="display: flex; gap: 10px; align-items: center;">
+    <div class="social-buttons">
       
       <!-- زر الواتساب -->
       <a href="https://wa.me/905382067076" target="_blank" class="whatsapp-btn social-btn">
@@ -31,9 +31,8 @@
 
       <!-- زر التليجرام -->
       <a href="https://t.me/m_7aj" target="_blank" class="telegram-btn social-btn" title="تليجرام">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.07-.78 4.18-1.82 6.97-3.02 8.37-3.61 3.98-1.66 4.81-1.95 5.35-1.96.12 0 .38.03.55.17.14.12.18.28.2.45-.02.07-.02.19-.03.25z"/>
         </svg>
         <span>تليجرام</span>
       </a>
@@ -59,7 +58,7 @@
     </div>
 
     <button class="icon-btn" id="openSettings" aria-label="settings">
-      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06-.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33h0a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51h0a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82v0a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     </button>
   </div>
 </header>
@@ -86,6 +85,25 @@
     <div class="group"><h3 id="hTheme"></h3><div class="opts" id="themeOpts"></div></div>
     <div class="group"><h3 id="hLang"></h3><div class="opts" id="langOpts"></div></div>
     <div class="group"><h3 id="hCur"></h3><div class="opts" id="curOpts"></div></div>
+  </div>
+</div>
+
+<!-- نافذة معلومات المنتج المخصصة (تتأثر بالثيم تلقائياً) -->
+<div class="overlay" id="infoOverlay">
+  <div class="sheet info-modal" role="dialog" aria-modal="true">
+    <button class="x modal-close" id="closeInfoModal" aria-label="close">×</button>
+    <div class="info-modal-body">
+      <div class="info-modal-img">
+        <img id="infoModalImg" src="" alt="product image">
+      </div>
+      <div class="info-modal-content">
+        <h2 id="infoModalTitle"></h2>
+        <div class="info-modal-price" id="infoModalPrice"></div>
+        <div class="info-modal-desc-box">
+          <p id="infoModalDesc"></p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

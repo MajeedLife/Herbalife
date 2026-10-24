@@ -24,6 +24,7 @@ body{
   background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;
   padding-bottom:env(safe-area-inset-bottom);transition:background .2s,color .2s;
 }
+body.lock{overflow:hidden}
 button,input,select{font-family:inherit;font-size:inherit;color:inherit}
 button{cursor:pointer;border:none;background:none}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
@@ -63,22 +64,54 @@ button{cursor:pointer;border:none;background:none}
 .noimg{display:grid;place-items:center;gap:4px;color:var(--muted);text-align:center;padding:10px}
 .noimg b{font-family:ui-monospace,Menlo,monospace;font-size:20px;color:var(--accent);direction:ltr}
 .noimg span{font-size:12px}
-.card-body{padding:12px 13px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-body{padding:12px 13px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card-name{margin:0;font-weight:700;font-size:14.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;min-height:4.35em}
-.card-price{margin-top:auto;font-weight:800;font-size:17px;color:var(--price);direction:ltr;text-align:start}
+
+/* أسفل بطاقة المنتج (السعر + زر المعلومات) */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.card-price{font-weight:800;font-size:16px;color:var(--price);direction:ltr;text-align:start}
 [dir="rtl"] .card-price{text-align:right}
- 
+
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.info-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
 .empty{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
  
-/* نافذة الإعدادات */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:60;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+/* نافذة الإعدادات والمعلومات */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:60;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;backdrop-filter:blur(4px)}
 .overlay.on{opacity:1;pointer-events:auto}
 .sheet{background:var(--card);color:var(--ink);width:100%;max-width:520px;max-height:88vh;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 18px calc(22px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .25s cubic-bezier(.3,.8,.3,1)}
 .overlay.on .sheet{transform:none}
 @media(min-width:640px){.overlay{align-items:center}.sheet{border-radius:22px}}
 .sheet-head{display:flex;align-items:center;margin-bottom:14px}
 .sheet-head h2{margin:0;flex:1;font-size:18px;font-weight:800}
-.x{width:36px;height:36px;border-radius:10px;background:var(--bg);font-size:20px;font-weight:700;color:var(--muted)}
+.x{width:36px;height:36px;border-radius:10px;background:var(--bg);font-size:20px;font-weight:700;color:var(--muted);display:grid;place-items:center;transition:all 0.15s}
+.x:hover{background:var(--line);color:var(--ink)}
+
 .group{margin-bottom:18px}
 .group h3{margin:0 0 9px;font-size:14px;font-weight:700;color:var(--muted)}
 .opts{display:flex;gap:8px;flex-wrap:wrap}
@@ -87,74 +120,104 @@ button{cursor:pointer;border:none;background:none}
 .opt.on{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
 .swatch{display:flex;justify-content:center;gap:4px;margin-bottom:6px}
 .swatch i{width:16px;height:16px;border-radius:50%;display:block;border:1px solid rgba(0,0,0,.15)}
+
+/* نافذة معلومات المنتج المخصصة (Modal Design) */
+.info-modal {
+  position: relative;
+  max-width: 480px;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+}
+[dir="ltr"] .modal-close {
+  left: auto;
+  right: 16px;
+}
+.info-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px;
+}
+.info-modal-img {
+  width: 100%;
+  height: 200px;
+  background: var(--img-bg);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.info-modal-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.info-modal-content h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+.info-modal-price {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--price);
+  margin-bottom: 12px;
+  direction: ltr;
+  text-align: start;
+}
+[dir="rtl"] .info-modal-price {
+  text-align: right;
+}
+.info-modal-desc-box {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.info-modal-desc-box p {
+  margin: 0;
+  white-space: pre-line;
+}
  
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
-/* زر الواتساب في الشريط العلوي */
-/* تنسيق الحاوية الخاصة بالأيقونات */
+
+/* أزرار التواصل الاجتماعي */
 .social-buttons {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
-
-/* التنسيق الأساسي الفاخر للأزرار */
 .social-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 30px; /* جعل الأزرار دائرية الأطراف بشكل أنيق (Pill shape) */
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 30px;
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.05); /* خلفية شفافة فاخرة تتناسب مع مختلف ألوان الهيدر */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* إطار خفيف وراقي */
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: inherit;
-  backdrop-filter: blur(10px); /* تأثير زجاجي خفيف */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
 }
+.whatsapp-btn:hover { background-color: #25d366; border-color: #25d366; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); }
+.telegram-btn:hover { background-color: #24a1de; border-color: #24a1de; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(36, 161, 222, 0.3); }
+.instagram-btn:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: transparent; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3); }
+.tiktok-btn:hover { background-color: #000000; border-color: #000000; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
 
-/* تأثيرات الـ Hover المخصصة لكل منصة بلونها الرسمي الحقيقي */
-.whatsapp-btn:hover {
-  background-color: #25d366;
-  border-color: #25d366;
-  color: #fff;
-  transform: translateY(-2px); /* صعود الزر للأعلى بسلاسة عند مرور الماوس */
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); /* ظل ملون خفيف */
-}
-
-.telegram-btn:hover {
-  background-color: #24a1de;
-  border-color: #24a1de;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(36, 161, 222, 0.3);
-}
-
-.instagram-btn:hover {
-  /* تدرج لوني خاص بإنستغرام عند التحويم */
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-  border-color: transparent;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3);
-}
-
-.tiktok-btn:hover {
-  background-color: #000000;
-  border-color: #000000;
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* 📱 الشاشات الصغيرة (الموبايل) */
+/* 📱 الموبايل */
 @media (max-width: 768px) {
-  .social-btn {
-    padding: 8px; /* تحويلها إلى أزرار مربعة/دائرية للأيقونات فقط */
-    border-radius: 50%;
-  }
-  .social-btn span {
-    display: none; /* إخفاء الكلمات في الموبايل لكي لا يزدحم المكان */
-  }
+  .social-btn { padding: 8px; border-radius: 50%; }
+  .social-btn span { display: none; }
 }
