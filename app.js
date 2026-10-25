@@ -135,7 +135,7 @@ const CURRENCIES = {
 };
 const CUR_ORDER = ["IQD","TRY","USD"];
  
-const DEFAULTS = { theme:"default", lang:"ar", cur:"IQD" };
+const DEFAULTS = { theme:"default", lang:"ar", cur:"TRY" };
 let state = { ...DEFAULTS };
 try{
   const saved = JSON.parse(localStorage.getItem("store_prefs") || "{}");
